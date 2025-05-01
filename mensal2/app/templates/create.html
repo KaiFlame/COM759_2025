@@ -1,0 +1,42 @@
+{% extends "main.html" %}
+{% block title %}Criação de candidato{% endblock %}
+{% block ajax %}
+<script>
+    $(document).ready(function () {
+        $("#submit").on('click', function () {
+            $.ajax({
+                url: 'http://localhost:5000/createAction',
+                type: "POST",
+                dataType: 'json',
+                data: $("#form").serialize(),
+                success: function (result) {
+                    alert(result['mensagem']);
+                    $("#form").trigger("reset");
+                },
+                error: function (xhr, resp, text) {
+                    console.log(xhr, resp, text);
+                    alert("houve um erro");
+                }
+            });
+        });
+        $("#clearbtn").on('click', function () {
+            $("#form").trigger("reset");
+        });
+    });
+</script>
+{% endblock %}
+{% block body %}
+<h1>Formulário:</h1>
+<form method="POST">
+    <input name="numero" placeholder="Número" required><br>
+    <input name="comprador" placeholder="Comprador" required><br>
+    <input name="cnpj" placeholder="CNPJ"><br>
+    <input name="endereco" placeholder="Endereço"><br>
+    <input name="telefone" placeholder="Telefone"><br>
+    <input name="data" type="date"><br>
+    <input name="valor" placeholder="Valor"><br>
+    <input name="itens" placeholder="Itens"><br>
+    <button type="submit">Salvar</button>
+  </form>
+  
+{% endblock %}
